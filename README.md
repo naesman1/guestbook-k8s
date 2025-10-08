@@ -27,8 +27,8 @@ Herramientas de K8s: kubectl y hey (para pruebas de estrés).
   Clona el código del proyecto y navega hasta el directorio del Chart:
 
 ```
-git clone https://github.com/KeepCodingCloudDevops12/miguel_narvaiz-K8s.git
-cd  <directorio donde esta el repositotio>/miguel_narvaiz-K8s/guestbook-app
+git clone https://github.com/naesman1/guestbook-k8s.git
+cd  <directorio donde esta el repositotio>/naesman1/guestbook-app
 ```
 
 **Paso 2: Iniciar Minikube y Addons**
@@ -173,6 +173,7 @@ Eliminar (Delete)	    minikube delete	                ❌ No (Se borra la VM y s
 ```
 helm uninstall guestbook-release
 ```
+
 
 
 

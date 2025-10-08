@@ -1,0 +1,18 @@
+{
+  "name": "guestbook-app",
+  "version": "1.0.0",
+  "description": "Guestbook Node.js application",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "mysql2": "^3.0.0",
+    "prom-client": "^14.0.0",
+    "pino": "^7.0.0"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

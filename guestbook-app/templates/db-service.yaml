@@ -1,0 +1,18 @@
+# guestbook-app/templates/db-service.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: guestbook-db # Este es el DB_HOST que usará la aplicación Node.js
+  labels:
+    app.kubernetes.io/name: guestbook-db
+    app.kubernetes.io/instance: {{ .Release.Name }}
+spec:
+  type: ClusterIP # Solo accesible desde dentro del clúster
+  ports:
+    - port: 3306
+      targetPort: 3306
+      protocol: TCP
+      name: mysql
+  selector:
+    app.kubernetes.io/name: guestbook-db
+    app.kubernetes.io/instance: {{ .Release.Name }}

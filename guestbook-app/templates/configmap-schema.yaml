@@ -1,0 +1,22 @@
+# guestbook-app/templates/configmap-schema.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: {{ .Values.db.schemaConfigMap }}
+  labels:
+    app.kubernetes.io/instance: {{ .Release.Name }}
+data:
+  # init.sql es el nombre de archivo que MySQL ejecuta automáticamente.
+  init.sql: |
+    -- Creación de la base de datos
+    CREATE DATABASE IF NOT EXISTS {{ .Values.secret.dbName }};
+    USE {{ .Values.secret.dbName }};
+
+    -- Creación de la tabla 'entries' con Unique Key en email
+    CREATE TABLE IF NOT EXISTS entries (
+        id INT AUTO_INCREMENT PRIMARY KEY,
+        email VARCHAR(255) NOT NULL,
+        visits INT DEFAULT 1,
+        timestamp TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+        CONSTRAINT UQ_Email UNIQUE (email)
+    );

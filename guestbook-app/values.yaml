@@ -1,0 +1,50 @@
+# guestbook-app/values.yaml
+
+# --- 1. Configuración de la Aplicación Node.js (Frontend) ---
+app:
+  image:
+    repository: guestbook-app
+    tag: latest
+    pullPolicy: IfNotPresent
+  
+  # Alta Disponibilidad (HA) y Resiliencia
+  replicaCount: 2
+  service:
+    port: 3000
+
+# --- 2. Configuración de la Base de Datos MySQL (Backend) ---
+db:
+  image:
+    repository: mysql
+    tag: 8.0 # Usamos una versión estable y moderna
+    pullPolicy: IfNotPresent
+  
+  # Persistencia de Datos
+  persistence:
+    enabled: true
+    size: 2Gi # Tamaño mínimo de PVC
+    
+  schemaConfigMap: guestbook-schema # Nombre del ConfigMap para el script SQL.
+
+# --- 3. Gestión Segura de Credenciales ---
+# Estos valores se usarán para crear un K8s Secret.
+secret:
+  name: guestbook-db-credentials
+  user: keepcoding
+  password: kck8s
+  dbName: guestbook_db  # Nombre de la base de datos a crear
+
+# --- 4. Escalabilidad Automática ---
+autoscaling:
+  enabled: true # Habilita/deshabilita el HPA
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 50 # Escala al 70% de uso de CPU 
+
+# --- 5. Exposición al Exterior ---
+ingress:
+  enabled: true # Usaremos Ingress como la mejor práctica de exposición
+  className: "nginx" # Asume el uso del Nginx Ingress Controller 
+  host: guestbook.local # Host que se usará para acceder a la app
+  path: /
+  port: 3000
